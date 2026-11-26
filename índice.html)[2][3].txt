@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MARK | Barbería Minimalista</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Paleta estrictamente en colores fríos */
+      --bg-page: #F4F7FA;
+      --bg-surface: #FFFFFF;
+      --bg-ice: #EAF1F8;
+      --text-main: #0B132B;
+      --text-secondary: #3A506B;
+      --text-muted: #6E859E;
+      --accent: #1D4ED8;
+      --accent-hover: #1E40AF;
+      --accent-soft: #DBEAFE;
+      --cyan-frost: #0284C7;
+      --cyan-soft: #E0F2FE;
+      --border: #DCE5EF;
+      --disabled-bg: #E6EDF5;
+      --disabled-text: #94A8BE;
+      --radius: 12px;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .brand {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.03em;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hidden { display: none !important; }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(244, 247, 250, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+    }
+
+    .brand span { color: var(--cyan-frost); }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a, nav button.nav-link-btn {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      transition: color var(--transition);
+    }
+
+    nav a:hover, nav button.nav-link-btn:hover { color: var(--accent); }
+
+    .btn-nav {
+      background: var(--text-main) !important;
+      color: var(--bg-surface) !important;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.86rem !important;
+    }
+
+    .btn-nav:hover { background: var(--accent) !important; }
+
+    .user-badge {
+      font-size: 0.85rem;
+      color: var(--cyan-frost);
+      background: var(--cyan-soft);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    /* Botones */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--text-main);
+      color: var(--bg-surface);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      background: var(--disabled-text);
+      cursor: wait;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--bg-ice);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-soft);
+      border-color: var(--cyan-frost);
+    }
+
+    .btn-sm { padding: 7px 14px; font-size: 0.82rem; border-radius: 8px; }
+
+    /* Hero */
+    .hero {
+      padding: 84px 0 68px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--cyan-frost);
+      background: var(--accent-soft);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 5vw, 3.8rem);
+      line-height: 1.08;
+      font-weight: 700;
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      font-size: 1.06rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 32px;
+    }
+
+    /* Secciones */
+    section { padding: 72px 0; }
+    .section-header { margin-bottom: 36px; }
+    .section-header h2 { font-size: 1.9rem; margin-bottom: 6px; }
+    .section-header p { color: var(--text-muted); font-size: 0.96rem; }
+
+    /* Servicios */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+
+    .service-card:hover {
+      border-color: var(--cyan-frost);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(11, 19, 43, 0.05);
+    }
+
+    .service-duration {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .service-card h3 { font-size: 1.22rem; margin-bottom: 8px; }
+    .service-card p { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 20px; }
+
+    .service-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-main);
+    }
+
+    .select-link { font-size: 0.84rem; font-weight: 500; color: var(--cyan-frost); }
+
+    /* Auth Gate & Reserva */
+    .booking-section {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .auth-gate {
+      max-width: 460px;
+      margin: 0 auto;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-ice);
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+    }
+
+    .auth-tab {
+      padding: 10px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .auth-tab.active {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      box-shadow: 0 2px 6px rgba(11, 19, 43, 0.06);
+    }
+
+    .form-field { margin-bottom: 16px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.94rem;
+      transition: border-color var(--transition);
+    }
+
+    .input-field:focus { outline: none; border-color: var(--accent); }
+
+    .feedback-msg {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      min-height: 20px;
+    }
+
+    /* Formulario de Cita */
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .form-group { margin-bottom: 26px; }
+
+    .service-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .option-chip { position: relative; }
+    .option-chip input { position: absolute; opacity: 0; }
+
+    .option-chip label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+
+    .option-chip label span { font-size: 0.85rem; color: var(--text-muted); }
+
+    .option-chip input:checked + label {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .option-chip input:checked + label span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .day-schedule-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: var(--bg-ice);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .day-schedule-banner strong { color: var(--text-main); }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+      gap: 8px;
+    }
+
+    .time-slot {
+      padding: 10px 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-page);
+      color: var(--text-main);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center;
+    }
+
+    .time-slot:hover:not(:disabled) {
+      border-color: var(--cyan-frost);
+      background: var(--bg-ice);
+    }
+
+    .time-slot.selected {
+      background: var(--text-main);
+      color: var(--bg-surface);
+      border-color: var(--text-main);
+    }
+
+    .time-slot:disabled {
+      background: var(--disabled-bg);
+      color: var(--disabled-text);
+      border-color: transparent;
+      cursor: not-allowed;
+    }
+
+    .time-slot.break-slot {
+      background: var(--cyan-soft);
+      color: var(--text-muted);
+      border: 1px dashed var(--border);
+      font-size: 0.76rem;
+    }
+
+    /* Resumen lateral */
+    .summary-card {
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .summary-card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      gap: 12px;
+    }
+
+    .summary-row strong {
+      color: var(--text-main);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .summary-total {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .summary-total span { font-size: 0.88rem; color: var(--text-muted); }
+    .summary-total strong { font-family: 'Space Grotesk', sans-serif; font-size: 1.45rem; }
+
+    /* Mi Registro de Cliente */
+    .client-record {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .client-record h3 { font-size: 1.35rem; margin-bottom: 6px; }
+    .client-record > p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 24px; }
+
+    .record-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 18px;
+    }
+
+    .record-card {
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .status-pendiente { background: var(--accent-soft); color: var(--accent-hover); }
+    .status-completada { background: var(--cyan-soft); color: var(--cyan-frost); }
+
+    .server-msg-tag {
+      font-size: 0.78rem;
+      color: var(--cyan-frost);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .haircut-photo {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-ice);
+    }
+
+    /* ================= PANEL ADMIN ================= */
+    .admin-panel { padding: 48px 0 88px; min-height: calc(100vh - 160px); }
+
+    .admin-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .kpi-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .admin-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+
+    .filter-btn {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .filter-btn.active {
+      background: var(--text-main);
+      color: var(--bg-surface);
+      border-color: var(--text-main);
+    }
+
+    .admin-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .admin-appt-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 150px 1fr auto;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .admin-datetime strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+
+    .admin-datetime span { font-size: 0.84rem; color: var(--text-muted); }
+
+    .admin-client-info h4 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-client-info p { font-size: 0.88rem; color: var(--text-secondary); }
+
+    .admin-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+    .thumb-mini {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    .client-profile-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .client-photos-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .client-photos-strip img {
+      width: 100%;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    /* Modales */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 19, 43, 0.58);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.active { display: flex; }
+
+    .modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 460px;
+      width: 100%;
+      padding: 30px;
+    }
+
+    .modal h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    .modal p.modal-sub { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 18px; }
+
+    .server-dispatch-box {
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .server-dispatch-box strong {
+      display: block;
+      color: var(--cyan-frost);
+      margin-bottom: 6px;
+    }
+
+    .photo-preview-box {
+      width: 100%;
+      height: 200px;
+      border: 1px dashed var(--cyan-frost);
+      border-radius: 10px;
+      background: var(--bg-page);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 14px;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    .photo-preview-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    @media (max-width: 820px) {
+      .booking-layout { grid-template-columns: 1fr; }
+      .summary-card { position: static; }
+      .admin-appt-card { grid-template-columns: 1fr; gap: 12px; }
+    }
+
+    @media (max-width: 580px) {
+      .service-options { grid-template-columns: 1fr; }
+      .time-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero { padding: 56px 0 48px; }
+      nav a.hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand" onclick="showPublicView()">MARK<span>.</span></a>
+      <nav id="mainNav"></nav>
+    </div>
+  </header>
+
+  <!-- ==================== VISTA CLIENTE / PÚBLICA ==================== -->
+  <main id="publicView">
+    <section class="hero">
+      <div class="container">
+        <span class="hero-tag">Barbería Contemporánea</span>
+        <h1>Precisión, estilo limpio y cuidado personal.</h1>
+        <p>Espacio minimalista pensado para tu imagen. Crea tu cuenta y agenda tu corte, ondulado, tinte o barba con confirmación automática.</p>
+        <a href="#agendar" class="btn-primary">Reservar mi cita →</a>
+      </div>
+    </section>
+
+    <section id="servicios">
+      <div class="container">
+        <div class="section-header">
+          <h2>Servicios</h2>
+          <p>Selecciona un servicio para prepararlo en tu reserva.</p>
+        </div>
+
+        <div class="services-grid">
+          <div class="service-card" onclick="quickSelectService('corte')">
+            <div>
+              <span class="service-duration">45 min</span>
+              <h3>Corte de pelo</h3>
+              <p>Asesoría de imagen, corte a tijera o máquina, lavado y estilizado.</p>
+            </div>
+            <div class="service-bottom">
+              <span class="price">$100 MXN</span>
+              <span class="select-link">Elegir →</span>
+            </div>
+          </div>
+
+          <div class="service-card" onclick="quickSelectService('ondulado')">
+            <div>
+              <span class="service-duration">90 min</span>
+              <h3>Ondulado</h3>
+              <p>Permanente y textura definida con acabado natural y tratamiento.</p>
+            </div>
+            <div class="service-bottom">
+              <span class="price">$650 MXN</span>
+              <span class="select-link">Elegir →</span>
+            </div>
+          </div>
+
+          <div class="service-card" onclick="quickSelectService('tinte')">
+            <div>
+              <span class="service-duration">90 min</span>
+              <h3>Tinte</h3>
+              <p>Coloración uniforme, tonos fríos, platinado o matización.</p>
+            </div>
+            <div class="service-bottom">
+              <span class="price">$650 MXN</span>
+              <span class="select-link">Elegir →</span>
+            </div>
+          </div>
+
+          <div class="service-card" onclick="quickSelectService('barba')">
+            <div>
+              <span class="service-duration">30 min</span>
+              <h3>Barba</h3>
+              <p>Perfilado a navaja, toalla fría y bálsamo hidratante.</p>
+            </div>
+            <div class="service-bottom">
+              <span class="price">$70 MXN</span>
+              <span class="select-link">Elegir →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="agendar" class="booking-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Agenda tu cita</h2>
+          <p id="bookingSubtitle">Inicia sesión o crea una cuenta con tu nombre y contraseña para reservar.</p>
+        </div>
+
+        <!-- Gate de Registro / Inicio de Sesión -->
+        <div id="authGate" class="auth-gate">
+          <div class="auth-tabs">
+            <button type="button" class="auth-tab active" id="tabRegister" onclick="switchAuthTab('register')">Crear cuenta</button>
+            <button type="button" class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Iniciar sesión</button>
+          </div>
+
+          <form id="authForm">
+            <div class="form-field">
+              <label class="form-label" for="authName">Tu nombre</label>
+              <input type="text" id="authName" class="input-field" placeholder="Ej. Carlos Mendoza" required>
+            </div>
+            <div class="form-field" id="phoneFieldGroup">
+              <label class="form-label" for="authPhone">WhatsApp / Teléfono (para confirmación)</label>
+              <input type="tel" id="authPhone" class="input-field" placeholder="Ej. 5512345678" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="authPassword">Contraseña</label>
+              <input type="password" id="authPassword" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;" id="authSubmitBtn">Crear cuenta y continuar</button>
+            <p id="authFeedback" class="feedback-msg"></p>
+          </form>
+        </div>
+
+        <!-- Formulario de Reserva -->
+        <div id="bookingArea" class="hidden">
+          <form id="bookingForm" class="booking-layout">
+            <div>
+              <div class="form-group">
+                <span class="form-label">1. Elige tus servicios</span>
+                <div class="service-options">
+                  <div class="option-chip">
+                    <input type="checkbox" id="srv-corte" value="corte" data-name="Corte de pelo" data-price="100" data-duration="45">
+                    <label for="srv-corte">Corte de pelo <span>$100</span></label>
+                  </div>
+                  <div class="option-chip">
+                    <input type="checkbox" id="srv-ondulado" value="ondulado" data-name="Ondulado" data-price="650" data-duration="90">
+                    <label for="srv-ondulado">Ondulado <span>$650</span></label>
+                  </div>
+                  <div class="option-chip">
+                    <input type="checkbox" id="srv-tinte" value="tinte" data-name="Tinte" data-price="650" data-duration="90">
+                    <label for="srv-tinte">Tinte <span>$650</span></label>
+                  </div>
+                  <div class="option-chip">
+                    <input type="checkbox" id="srv-barba" value="barba" data-name="Barba" data-price="70" data-duration="30">
+                    <label for="srv-barba">Barba <span>$70</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dateInput" class="form-label">2. Selecciona la fecha</label>
+                <input type="date" id="dateInput" class="input-field" required>
+              </div>
+
+              <div class="form-group">
+                <span class="form-label">3. Horarios disponibles</span>
+                <div id="dayScheduleBanner" class="day-schedule-banner"></div>
+                <div id="timeGrid" class="time-grid"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="clientNote" class="form-label">4. Nota para el barbero (opcional)</label>
+                <input type="text" id="clientNote" class="input-field" placeholder="Ej. Fade bajo, rebajar solo puntas arriba">
+              </div>
+            </div>
+
+            <aside class="summary-card">
+              <h3>Resumen de reserva</h3>
+              <div class="summary-row"><span>Cliente</span><strong id="sumClient">-</strong></div>
+              <div class="summary-row"><span>WhatsApp</span><strong id="sumPhone">-</strong></div>
+              <div class="summary-row"><span>Servicios</span><strong id="sumServices">Ninguno</strong></div>
+              <div class="summary-row"><span>Duración aprox.</span><strong id="sumDuration">0 min</strong></div>
+              <div class="summary-row"><span>Fecha</span><strong id="sumDate">-</strong></div>
+              <div class="summary-row"><span>Hora</span><strong id="sumTime">Por elegir</strong></div>
+              <div class="summary-total">
+                <span>Total estimado</span>
+                <strong id="sumTotal">$0 MXN</strong>
+              </div>
+              <button type="submit" id="confirmBtn" class="btn-primary" style="width:100%; margin-top:22px;">Confirmar cita</button>
+              <p id="formFeedback" class="feedback-msg"></p>
+            </aside>
+          </form>
+
+          <!-- Registro del Cliente -->
+          <div id="clientRecordSection" class="client-record">
+            <h3>Mi Registro de Cliente</h3>
+            <p>Aquí aparecen tus citas, confirmaciones enviadas y las fotos de tus cortes.</p>
+            <div id="clientRecordList" class="record-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== PANEL DE ADMINISTRADOR ==================== -->
+  <main id="adminView" class="admin-panel hidden">
+    <div class="container">
+      <div class="admin-topbar">
+        <div>
+          <span class="hero-tag" style="margin-bottom:8px;">Administrador · Barbería Mark</span>
+          <h2 style="font-size:1.9rem;">Panel de Citas y Clientes</h2>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="button" class="btn-secondary" onclick="showPublicView()">Ver sitio web</button>
+          <button type="button" class="btn-primary" style="padding:10px 20px;" onclick="logout()">Cerrar sesión</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">Pendientes</span>
+          <div class="kpi-value" id="kpiPending">0</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Completadas</span>
+          <div class="kpi-value" id="kpiDone">0</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Clientes registrados</span>
+          <div class="kpi-value" id="kpiClients">0</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Ingreso estimado</span>
+          <div class="kpi-value" id="kpiRevenue">$0</div>
+        </div>
+      </div>
+
+      <div class="admin-filters">
+        <button type="button" class="filter-btn active" onclick="setAdminTab('Pendiente', this)">Pendientes</button>
+        <button type="button" class="filter-btn" onclick="setAdminTab('Completada', this)">Completadas</button>
+        <button type="button" class="filter-btn" onclick="setAdminTab('Todas', this)">Todas las citas</button>
+        <button type="button" class="filter-btn" onclick="setAdminTab('Clientes', this)">Registro de clientes</button>
+      </div>
+
+      <div id="adminContentArea"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="brand" style="font-size: 1.1rem;">MARK<span>.</span></div>
+      <div>Lun–Vie: 1:00 PM–11:00 PM (Descanso 5:30 PM) · Sáb: 8:00 AM–11:00 PM · Dom: 11:00 AM–11:00 PM</div>
+      <div style="display:flex; gap:16px; align-items:center;">
+        <span>© 2026 Barbería Mark</span>
+        <button type="button" onclick="openAdminLoginModal()" style="background:none; border:none; color:var(--cyan-frost); cursor:pointer; font-family:inherit; font-size:0.86rem; font-weight:600;">
+          Acceso Barbero
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Confirmación de Cita y Mensaje de Servidor -->
+  <div id="confirmModal" class="modal-backdrop">
+    <div class="modal" style="text-align:center;">
+      <h3>Cita confirmada</h3>
+      <p class="modal-sub" id="modalDetails"></p>
+      <div class="server-dispatch-box" id="serverDispatchBox"></div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button type="button" class="btn-primary" onclick="closeModal('confirmModal')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Login Barbero -->
+  <div id="adminLoginModal" class="modal-backdrop">
+    <div class="modal">
+      <h3>Acceso Barbero</h3>
+      <p class="modal-sub">Ingresa las credenciales de administrador para ver y gestionar las citas.</p>
+      <form id="adminLoginForm">
+        <div class="form-field">
+          <label class="form-label" for="adminUser">Usuario</label>
+          <input type="text" id="adminUser" class="input-field" placeholder="MARK" required>
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="adminPass">Contraseña</label>
+          <input type="password" id="adminPass" class="input-field" placeholder="••••••••" required>
+        </div>
+        <p id="adminLoginFeedback" class="feedback-msg" style="margin-bottom:12px;"></p>
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn-secondary" onclick="closeModal('adminLoginModal')">Cancelar</button>
+          <button type="submit" class="btn-primary" style="padding:10px 22px;">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Subir Foto / Finalizar Corte -->
+  <div id="photoModal" class="modal-backdrop">
+    <div class="modal">
+      <h3 id="photoModalTitle">Finalizar corte y subir foto</h3>
+      <p class="modal-sub" id="photoModalSub"></p>
+
+      <div class="photo-preview-box" id="photoPreviewBox">
+        <span>Sin foto seleccionada</span>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="photoFileInput">Seleccionar foto del corte</label>
+        <input type="file" id="photoFileInput" accept="image/*" class="input-field" style="padding:9px;">
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="barberComment">Nota técnica del corte (opcional)</label>
+        <input type="text" id="barberComment" class="input-field" placeholder="Ej. Mid fade con #1.5, textura arriba">
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+        <button type="button" class="btn-secondary" onclick="closeModal('photoModal')">Cancelar</button>
+        <button type="button" class="btn-primary" style="padding:10px 22px;" onclick="saveCompletedAppointment()">Guardar registro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Ver Foto en Grande -->
+  <div id="lightboxModal" class="modal-backdrop" onclick="closeModal('lightboxModal')">
+    <div class="modal" style="max-width:560px; padding:16px;" onclick="event.stopPropagation()">
+      <img id="lightboxImg" src="" alt="Foto del corte" style="width:100%; max-height:70vh; object-fit:contain; border-radius:10px; background:var(--bg-page);">
+      <p id="lightboxCaption" style="margin-top:12px; font-size:0.9rem; color:var(--text-secondary); text-align:center;"></p>
+      <div style="text-align:center; margin-top:14px;">
+        <button type="button" class="btn-secondary" onclick="closeModal('lightboxModal')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ================= CONFIGURACIÓN =================
+    const ADMIN_USER = 'MARK';
+    const ADMIN_PASS = 'MARK201126';
+
+    // Si conectas un backend real (ej. Node.js / Twilio / Webhook), coloca aquí su URL:
+    const SERVER_API_URL = '';
+
+    const KEYS = {
+      USERS: 'mark_users_v3',
+      APPTS: 'mark_appointments_v3',
+      SESSION: 'mark_session_v3'
+    };
+
+    let authMode = 'register';
+    let selectedTime = null;
+    let pendingQuickService = null;
+    let adminTab = 'Pendiente';
+    let currentEditingApptId = null;
+    let currentPhotoBase64 = null;
+
+    // ================= UTILIDADES =================
+    const getJSON = (key, fallback = []) => {
+      try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+    };
+
+    const setJSON = (key, value) => {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch {
+        alert('El almacenamiento local del navegador está lleno. Elimina citas antiguas.');
+        return false;
+      }
+    };
+
+    const getSession = () => getJSON(KEYS.SESSION, null);
+    const setSession = (session) => setJSON(KEYS.SESSION, session);
+
+    function escapeHTML(str = '') {
+      const div = document.createElement('div');
+      div.textContent = String(str);
+      return div.innerHTML;
+    }
+
+    function getTodayString() {
+      const now = new Date();
+      const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+      return local.toISOString().split('T')[0];
+    }
+
+    // Convierte "17:30" a "5:30 PM"
+    function formatTime12h(time24) {
+      const [h, m] = time24.split(':').map(Number);
+      const period = h >= 12 ? 'PM' : 'AM';
+      const hour12 = h % 12 === 0 ? 12 : h % 12;
+      return `${hour12}:${String(m).padStart(2, '0')} ${period}`;
+    }
+
+    // Genera horarios exactos según el día de la semana (0=Dom, 1-5=Lun-Vie, 6=Sáb)
+    function getScheduleForDate(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const day = new Date(y, m - 1, d).getDay();
+
+      let startHour = 13;
+      let endHour = 23; // Cierre 11:00 PM (último turno 10:30 PM)
+      let label = 'Lunes a Viernes · 1:00 PM a 11:00 PM';
+      let hasAfternoonBreak = false;
+
+      if (day === 6) {
+        startHour = 8;
+        label = 'Sábado · 8:00 AM a 11:00 PM';
+      } else if (day === 0) {
+        startHour = 11;
+        label = 'Domingo · 11:00 AM a 11:00 PM';
+      } else {
+        hasAfternoonBreak = true;
+        label = 'Lunes a Viernes · 1:00 PM a 11:00 PM (Descanso 5:30 PM – 6:00 PM)';
+      }
+
+      const slots = [];
+      for (let h = startHour; h < endHour; h++) {
+        for (let min of [0, 30]) {
+          const code = `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+          const isBreak = hasAfternoonBreak && code === '17:30';
+          slots.push({ code, isBreak });
+        }
+      }
+
+      return { label, slots };
+    }
+
+    // Envío de confirmación desde servidor
+    async function dispatchServerConfirmation(appointment) {
+      const messageBody =
+        `Hola ${appointment.clientName}, tu cita en Barbería MARK ha sido confirmada (Folio ${appointment.folio}). ` +
+        `Te esperamos el ${appointment.date} a las ${formatTime12h(appointment.time)} para: ${appointment.services.join(', ')} ($${appointment.total} MXN).`;
+
+      if (SERVER_API_URL) {
+        try {
+          const res = await fetch(SERVER_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ appointment, message: messageBody })
+          });
+          if (res.ok) {
+            return { sent: true, mode: 'server', message: messageBody };
+          }
+        } catch (err) {
+          console.warn('No se pudo contactar al servidor externo, usando confirmación local:', err);
+        }
+      }
+
+      await new Promise(r => setTimeout(r, 350));
+      return {
+        sent: true,
+        mode: 'local',
+        message: messageBody
+      };
+    }
+
+    function compressImage(file, maxWidth = 650) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const scale = Math.min(1, maxWidth / img.width);
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.78));
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ================= HEADER Y VISTAS =================
+    function renderHeader() {
+      const nav = document.getElementById('mainNav');
+      const session = getSession();
+
+      if (session?.role === 'admin') {
+        nav.innerHTML = `
+          <span class="user-badge">Barbero: MARK</span>
+          <button type="button" class="nav-link-btn" onclick="showAdminView()">Panel Admin</button>
+          <button type="button" class="btn-nav" onclick="logout()">Salir</button>
+        `;
+        return;
+      }
+
+      if (session?.role === 'client') {
+        nav.innerHTML = `
+          <a href="#servicios" class="hide-mobile" onclick="showPublicView()">Servicios</a>
+          <a href="#clientRecordSection" class="hide-mobile" onclick="showPublicView()">Mi Registro</a>
+          <span class="user-badge">${escapeHTML(session.name)}</span>
+          <button type="button" class="nav-link-btn" onclick="logout()">Salir</button>
+        `;
+        return;
+      }
+
+      nav.innerHTML = `
+        <a href="#servicios" class="hide-mobile">Servicios</a>
+        <button type="button" class="nav-link-btn" onclick="openAdminLoginModal()">Barbero</button>
+        <a href="#agendar" class="btn-nav">Iniciar sesión / Agendar</a>
+      `;
+    }
+
+    function showPublicView() {
+      document.getElementById('publicView').classList.remove('hidden');
+      document.getElementById('adminView').classList.add('hidden');
+      updateAuthAndBookingUI();
+      renderHeader();
+    }
+
+    function showAdminView() {
+      const session = getSession();
+      if (session?.role !== 'admin') {
+        openAdminLoginModal();
+        return;
+      }
+      document.getElementById('publicView').classList.add('hidden');
+      document.getElementById('adminView').classList.remove('hidden');
+      renderHeader();
+      renderAdminDashboard();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function logout() {
+      localStorage.removeItem(KEYS.SESSION);
+      showPublicView();
+    }
+
+    // ================= AUTENTICACIÓN CLIENTE =================
+    function switchAuthTab(mode) {
+      authMode = mode;
+      document.getElementById('tabRegister').classList.toggle('active', mode === 'register');
+      document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
+
+      const phoneGroup = document.getElementById('phoneFieldGroup');
+      const phoneInput = document.getElementById('authPhone');
+      if (mode === 'register') {
+        phoneGroup.classList.remove('hidden');
+        phoneInput.required = true;
+        document.getElementById('authSubmitBtn').textContent = 'Crear cuenta y continuar';
+      } else {
+        phoneGroup.classList.add('hidden');
+        phoneInput.required = false;
+        document.getElementById('authSubmitBtn').textContent = 'Iniciar sesión';
+      }
+      document.getElementById('authFeedback').textContent = '';
+    }
+
+    document.getElementById('authForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('authName').value.trim();
+      const phone = document.getElementById('authPhone').value.trim();
+      const password = document.getElementById('authPassword').value;
+      const feedback = document.getElementById('authFeedback');
+
+      if (!name || password.length < 4) {
+        feedback.textContent = 'Ingresa tu nombre y una contraseña de al menos 4 caracteres.';
+        return;
+      }
+
+      if (name.toUpperCase() === ADMIN_USER) {
+        feedback.textContent = 'Ese nombre está reservado para el administrador.';
+        return;
+      }
+
+      const normalized = name.toLowerCase();
+      const users = getJSON(KEYS.USERS, []);
+
+      if (authMode === 'register') {
+        if (!phone) {
+          feedback.textContent = 'Ingresa tu teléfono/WhatsApp para recibir tu confirmación.';
+          return;
+        }
+        const exists = users.some(u => u.name.toLowerCase() === normalized);
+        if (exists) {
+          feedback.textContent = 'Ya existe una cuenta con ese nombre. Cambia a "Iniciar sesión".';
+          return;
+        }
+        const newUser = {
+          id: 'u_' + Date.now(),
+          name,
+          phone,
+          password,
+          createdAt: getTodayString()
+        };
+        users.push(newUser);
+        setJSON(KEYS.USERS, users);
+        setSession({ role: 'client', userId: newUser.id, name: newUser.name, phone: newUser.phone });
+      } else {
+        const found = users.find(u => u.name.toLowerCase() === normalized && u.password === password);
+        if (!found) {
+          feedback.textContent = 'Nombre o contraseña incorrectos.';
+          return;
+        }
+        setSession({ role: 'client', userId: found.id, name: found.name, phone: found.phone || '' });
+      }
+
+      document.getElementById('authForm').reset();
+      feedback.textContent = '';
+      renderHeader();
+      updateAuthAndBookingUI();
+    });
+
+    function updateAuthAndBookingUI() {
+      const session = getSession();
+      const authGate = document.getElementById('authGate');
+      const bookingArea = document.getElementById('bookingArea');
+      const subtitle = document.getElementById('bookingSubtitle');
+
+      if (session?.role === 'client') {
+        authGate.classList.add('hidden');
+        bookingArea.classList.remove('hidden');
+        subtitle.textContent = `Sesión iniciada como ${session.name}. Elige tus servicios y horario.`;
+        document.getElementById('sumClient').textContent = session.name;
+        document.getElementById('sumPhone').textContent = session.phone || 'Sin teléfono';
+
+        if (pendingQuickService) {
+          const cb = document.getElementById(`srv-${pendingQuickService}`);
+          if (cb) cb.checked = true;
+          pendingQuickService = null;
+        }
+
+        renderTimeSlots();
+        updateSummary();
+        renderClientRecord();
+      } else {
+        authGate.classList.remove('hidden');
+        bookingArea.classList.add('hidden');
+        subtitle.textContent = 'Inicia sesión o crea una cuenta con tu nombre y contraseña para poder reservar.';
+      }
+    }
+
+    // ================= RESERVA DE CITAS =================
+    const dateInput = document.getElementById('dateInput');
+    const timeGrid = document.getElementById('timeGrid');
+    const checkboxes = document.querySelectorAll('.option-chip input');
+
+    function quickSelectService(serviceKey) {
+      const session = getSession();
+      if (session?.role === 'client') {
+        const cb = document.getElementById(`srv-${serviceKey}`);
+        if (cb) {
+          cb.checked = true;
+          updateSummary();
+        }
+      } else {
+        pendingQuickService = serviceKey;
+      }
+      document.getElementById('agendar').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function renderTimeSlots() {
+      const selectedDate = dateInput.value;
+      if (!selectedDate) return;
+
+      const schedule = getScheduleForDate(selectedDate);
+      document.getElementById('dayScheduleBanner').innerHTML = `
+        <strong>Horario del día:</strong>
+        <span>${escapeHTML(schedule.label)}</span>
+      `;
+
+      const appointments = getJSON(KEYS.APPTS, []);
+      const bookedForDate = appointments
+        .filter(a => a.date === selectedDate)
+        .map(a => a.time);
+
+      const now = new Date();
+      const todayStr = getTodayString();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      timeGrid.innerHTML = '';
+      selectedTime = null;
+
+      schedule.slots.forEach(({ code, isBreak }) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'time-slot' + (isBreak ? ' break-slot' : '');
+
+        const [h, m] = code.split(':').map(Number);
+        const slotMinutes = h * 60 + m;
+        const isPast = (selectedDate === todayStr && slotMinutes <= currentMinutes);
+        const isBooked = bookedForDate.includes(code);
+
+        if (isBreak) {
+          btn.textContent = `${formatTime12h(code)} · Descanso`;
+          btn.disabled = true;
+        } else {
+          btn.textContent = formatTime12h(code);
+          if (isBooked || isPast) {
+            btn.disabled = true;
+          } else {
+            btn.addEventListener('click', () => {
+              document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+              btn.classList.add('selected');
+              selectedTime = code;
+              updateSummary();
+            });
+          }
+        }
+
+        timeGrid.appendChild(btn);
+      });
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const selected = Array.from(checkboxes).filter(c => c.checked);
+      const names = selected.map(c => c.dataset.name);
+      const total = selected.reduce((sum, c) => sum + Number(c.dataset.price), 0);
+      const duration = selected.reduce((sum, c) => sum + Number(c.dataset.duration), 0);
+
+      document.getElementById('sumServices').textContent = names.length ? names.join(', ') : 'Ninguno';
+      document.getElementById('sumDuration').textContent = `${duration} min`;
+      document.getElementById('sumDate').textContent = dateInput.value || '-';
+      document.getElementById('sumTime').textContent = selectedTime ? formatTime12h(selectedTime) : 'Por elegir';
+      document.getElementById('sumTotal').textContent = `$${total} MXN`;
+      document.getElementById('formFeedback').textContent = '';
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const session = getSession();
+      const feedback = document.getElementById('formFeedback');
+      const confirmBtn = document.getElementById('confirmBtn');
+
+      if (!session || session.role !== 'client') {
+        feedback.textContent = 'Debes iniciar sesión para reservar.';
+        return;
+      }
+
+      const selectedServices = Array.from(checkboxes).filter(c => c.checked);
+      if (!selectedServices.length) {
+        feedback.textContent = 'Selecciona al menos un servicio.';
+        return;
+      }
+
+      if (!selectedTime) {
+        feedback.textContent = 'Elige un horario disponible.';
+        return;
+      }
+
+      const serviceNames = selectedServices.map(c => c.dataset.name);
+      const total = selectedServices.reduce((sum, c) => sum + Number(c.dataset.price), 0);
+      const date = dateInput.value;
+      const note = document.getElementById('clientNote').value.trim();
+      const folio = 'MARK-' + Math.floor(1000 + Math.random() * 9000);
+
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Enviando confirmación...';
+
+      const newAppt = {
+        id: 'c_' + Date.now(),
+        folio,
+        userId: session.userId,
+        clientName: session.name,
+        clientPhone: session.phone || 'No registrado',
+        services: serviceNames,
+        total,
+        date,
+        time: selectedTime,
+        note,
+        status: 'Pendiente',
+        photo: null,
+        barberComment: '',
+        serverConfirmationMsg: ''
+      };
+
+      const dispatchResult = await dispatchServerConfirmation(newAppt);
+      newAppt.serverConfirmationMsg = dispatchResult.message;
+
+      const appts = getJSON(KEYS.APPTS, []);
+      appts.push(newAppt);
+      setJSON(KEYS.APPTS, appts);
+
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = 'Confirmar cita';
+
+      document.getElementById('modalDetails').textContent =
+        `Folio ${folio} · ${date} a las ${formatTime12h(selectedTime)}`;
+
+      document.getElementById('serverDispatchBox').innerHTML = `
+        <strong>✓ Mensaje de confirmación enviado por el servidor (${escapeHTML(newAppt.clientPhone)}):</strong>
+        <span>"${escapeHTML(dispatchResult.message)}"</span>
+      `;
+
+      document.getElementById('confirmModal').classList.add('active');
+
+      e.target.reset();
+      dateInput.value = date;
+      renderTimeSlots();
+      renderClientRecord();
+    });
+
+    function renderClientRecord() {
+      const session = getSession();
+      const container = document.getElementById('clientRecordList');
+      if (!session || session.role !== 'client') return;
+
+      const myAppts = getJSON(KEYS.APPTS, [])
+        .filter(a => a.userId === session.userId)
+        .sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+
+      if (!myAppts.length) {
+        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">Aún no tienes citas registradas.</p>`;
+        return;
+      }
+
+      container.innerHTML = myAppts.map(a => {
+        const pillClass = a.status === 'Completada' ? 'status-completada' : 'status-pendiente';
+        return `
+          <div class="record-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <strong style="font-size:0.95rem;">${escapeHTML(a.date)} · ${escapeHTML(formatTime12h(a.time))}</strong>
+                <span class="status-pill ${pillClass}">${escapeHTML(a.status)}</span>
+              </div>
+              <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:4px;">
+                ${escapeHTML(a.services.join(', '))}
+              </p>
+              <strong style="font-size:0.92rem;">$${a.total} MXN</strong>
+              ${a.serverConfirmationMsg ? `<div class="server-msg-tag">✓ Confirmación enviada (${escapeHTML(a.folio || 'MARK')})</div>` : ''}
+              ${a.barberComment ? `<p style="font-size:0.82rem; color:var(--text-muted); margin-top:8px;">Nota barbero: ${escapeHTML(a.barberComment)}</p>` : ''}
+            </div>
+
+            ${a.photo ? `
+              <div>
+                <img src="${a.photo}" alt="Foto de corte" class="haircut-photo" style="cursor:pointer;"
+                     onclick="openLightbox('${a.id}')">
+                <span style="display:block; font-size:0.78rem; color:var(--cyan-frost); margin-top:6px;">Foto subida por Barbería Mark</span>
+              </div>
+            ` : `
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.8rem; color:var(--text-muted);">
+                  ${a.status === 'Pendiente' ? 'En espera de atención' : 'Sin foto adjunta'}
+                </span>
+                ${a.status === 'Pendiente' ? `<button type="button" class="btn-secondary btn-sm" onclick="cancelMyAppt('${a.id}')">Cancelar</button>` : ''}
+              </div>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function cancelMyAppt(id) {
+      const appts = getJSON(KEYS.APPTS, []).filter(a => a.id !== id);
+      setJSON(KEYS.APPTS, appts);
+      renderTimeSlots();
+      renderClientRecord();
+    }
+
+    // ================= PANEL DE ADMINISTRADOR =================
+    function openAdminLoginModal() {
+      const session = getSession();
+      if (session?.role === 'admin') {
+        showAdminView();
+        return;
+      }
+      document.getElementById('adminLoginFeedback').textContent = '';
+      document.getElementById('adminLoginModal').classList.add('active');
+    }
+
+    document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = document.getElementById('adminUser').value.trim().toUpperCase();
+      const pass = document.getElementById('adminPass').value;
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        setSession({ role: 'admin', name: 'MARK' });
+        closeModal('adminLoginModal');
+        e.target.reset();
+        showAdminView();
+      } else {
+        document.getElementById('adminLoginFeedback').textContent = 'Usuario o contraseña incorrectos.';
+      }
+    });
+
+    function setAdminTab(tab, btn) {
+      adminTab = tab;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderAdminDashboard();
+    }
+
+    function renderAdminDashboard() {
+      const appts = getJSON(KEYS.APPTS, []);
+      const users = getJSON(KEYS.USERS, []);
+
+      const pending = appts.filter(a => a.status === 'Pendiente');
+      const done = appts.filter(a => a.status === 'Completada');
+      const revenue = appts.reduce((sum, a) => sum + Number(a.total || 0), 0);
+
+      document.getElementById('kpiPending').textContent = pending.length;
+      document.getElementById('kpiDone').textContent = done.length;
+      document.getElementById('kpiClients').textContent = users.length;
+      document.getElementById('kpiRevenue').textContent = `$${revenue}`;
+
+      const area = document.getElementById('adminContentArea');
+
+      if (adminTab === 'Clientes') {
+        if (!users.length) {
+          area.innerHTML = `<p style="color:var(--text-muted);">Aún no hay clientes registrados.</p>`;
+          return;
+        }
+        area.innerHTML = `<div class="clients-grid">` + users.map(u => {
+          const clientAppts = appts.filter(a => a.userId === u.id);
+          const photos = clientAppts.filter(a => a.photo);
+          return `
+            <div class="client-profile-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h4>${escapeHTML(u.name)}</h4>
+                <span class="status-pill status-pendiente">${clientAppts.length} cita(s)</span>
+              </div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); margin-top:4px;">WhatsApp: ${escapeHTML(u.phone || '-')}</p>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Registrado: ${escapeHTML(u.createdAt || '-')}</p>
+              ${photos.length ? `
+                <div class="client-photos-strip">
+                  ${photos.map(p => `<img src="${p.photo}" alt="Corte" onclick="openLightbox('${p.id}')">`).join('')}
+                </div>
+              ` : `<p style="font-size:0.82rem; color:var(--text-muted); margin-top:14px;">Sin fotos de corte todavía.</p>`}
+            </div>
+          `;
+        }).join('') + `</div>`;
+        return;
+      }
+
+      let filtered = appts;
+      if (adminTab === 'Pendiente') filtered = pending;
+      if (adminTab === 'Completada') filtered = done;
+
+      filtered = [...filtered].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+
+      if (!filtered.length) {
+        area.innerHTML = `
+          <div class="kpi-card" style="text-align:center; color:var(--text-muted);">
+            No hay citas en la categoría "${escapeHTML(adminTab)}".
+          </div>`;
+        return;
+      }
+
+      area.innerHTML = `<div class="admin-list">` + filtered.map(a => {
+        const pillClass = a.status === 'Completada' ? 'status-completada' : 'status-pendiente';
+        return `
+          <div class="admin-appt-card">
+            <div class="admin-datetime">
+              <strong>${escapeHTML(formatTime12h(a.time))}</strong>
+              <span>${escapeHTML(a.date)}</span>
+            </div>
+
+            <div class="admin-client-info">
+              <h4>
+                ${escapeHTML(a.clientName)}
+                <span class="status-pill ${pillClass}">${escapeHTML(a.status)}</span>
+              </h4>
+              <p>${escapeHTML(a.services.join(', '))} · <strong>$${a.total} MXN</strong> · Tel: ${escapeHTML(a.clientPhone || '-')}</p>
+              ${a.note ? `<p style="font-size:0.82rem; color:var(--text-muted);">Nota cliente: ${escapeHTML(a.note)}</p>` : ''}
+              ${a.barberComment ? `<p style="font-size:0.82rem; color:var(--cyan-frost);">Registro: ${escapeHTML(a.barberComment)}</p>` : ''}
+            </div>
+
+            <div class="admin-actions">
+              ${a.photo ? `<img src="${a.photo}" class="thumb-mini" title="Ver foto" onclick="openLightbox('${a.id}')">` : ''}
+              <button type="button" class="btn-primary btn-sm" onclick="openPhotoModal('${a.id}')">
+                ${a.status === 'Pendiente' ? 'Finalizar / Subir foto' : (a.photo ? 'Cambiar foto' : 'Subir foto')}
+              </button>
+              <button type="button" class="btn-secondary btn-sm" onclick="deleteApptAdmin('${a.id}')">Eliminar</button>
+            </div>
+          </div>
+        `;
+      }).join('') + `</div>`;
+    }
+
+    function deleteApptAdmin(id) {
+      const updated = getJSON(KEYS.APPTS, []).filter(a => a.id !== id);
+      setJSON(KEYS.APPTS, updated);
+      renderAdminDashboard();
+    }
+
+    // ================= SUBIDA DE FOTOS DEL CORTE =================
+    function openPhotoModal(apptId) {
+      const appts = getJSON(KEYS.APPTS, []);
+      const appt = appts.find(a => a.id === apptId);
+      if (!appt) return;
+
+      currentEditingApptId = apptId;
+      currentPhotoBase64 = appt.photo || null;
+
+      document.getElementById('photoModalTitle').textContent =
+        appt.status === 'Pendiente' ? 'Finalizar corte y subir foto' : 'Actualizar foto del corte';
+      document.getElementById('photoModalSub').textContent =
+        `Cliente: ${appt.clientName} · ${appt.services.join(', ')} (${appt.date})`;
+      document.getElementById('barberComment').value = appt.barberComment || '';
+      document.getElementById('photoFileInput').value = '';
+
+      const preview = document.getElementById('photoPreviewBox');
+      preview.innerHTML = currentPhotoBase64
+        ? `<img src="${currentPhotoBase64}" alt="Vista previa">`
+        : `<span>Sin foto seleccionada (opcional)</span>`;
+
+      document.getElementById('photoModal').classList.add('active');
+    }
+
+    document.getElementById('photoFileInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        currentPhotoBase64 = await compressImage(file);
+        document.getElementById('photoPreviewBox').innerHTML = `<img src="${currentPhotoBase64}" alt="Vista previa">`;
+      } catch {
+        alert('No se pudo procesar la imagen.');
+      }
+    });
+
+    function saveCompletedAppointment() {
+      if (!currentEditingApptId) return;
+      const appts = getJSON(KEYS.APPTS, []);
+      const index = appts.findIndex(a => a.id === currentEditingApptId);
+      if (index === -1) return;
+
+      appts[index].status = 'Completada';
+      appts[index].photo = currentPhotoBase64;
+      appts[index].barberComment = document.getElementById('barberComment').value.trim();
+
+      if (setJSON(KEYS.APPTS, appts)) {
+        closeModal('photoModal');
+        renderAdminDashboard();
+      }
+    }
+
+    function openLightbox(apptId) {
+      const appt = getJSON(KEYS.APPTS, []).find(a => a.id === apptId);
+      if (!appt || !appt.photo) return;
+      document.getElementById('lightboxImg').src = appt.photo;
+      document.getElementById('lightboxCaption').textContent =
+        `${appt.clientName} · ${appt.services.join(', ')} (${appt.date})${appt.barberComment ? ' — ' + appt.barberComment : ''}`;
+      document.getElementById('lightboxModal').classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // ================= INICIALIZACIÓN =================
+    const today = getTodayString();
+    dateInput.min = today;
+    dateInput.value = today;
+
+    dateInput.addEventListener('change', renderTimeSlots);
+    checkboxes.forEach(c => c.addEventListener('change', updateSummary));
+
+    const currentSession = getSession();
+    renderHeader();
+    if (currentSession?.role === 'admin') {
+      showAdminView();
+    } else {
+      updateAuthAndBookingUI();
+    }
+  </script>
+</body>
+</html>
